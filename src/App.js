@@ -1,22 +1,25 @@
 import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; //SIGUIENTE: CAPÍTULO 19
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; //SIGUIENTE: VIDEO 8, CAPÍTULO 19
 
 import Login from './components/auth/Login';
 import NuevaCuenta from './components/auth/NuevaCuenta';
 import Proyectos from './components/projects/Proyectos';
 
 import ProyectoState from './context/proyectos/proyectoState';
+import TareaState from './context/tareas/tareaState';
 
 function App() {
   return (
     <ProyectoState>
+      <TareaState>
         <Router>
-          <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/nueva-cuenta" component={NuevaCuenta} />
-              <Route exact path="/proyectos" component={Proyectos} />
-          </Switch>
-        </Router>
+            <Switch>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/nueva-cuenta" component={NuevaCuenta} />
+                <Route exact path="/proyectos" component={Proyectos} />
+            </Switch>
+          </Router>
+      </TareaState>
     </ProyectoState>
   );
 }
