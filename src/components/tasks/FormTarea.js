@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import proyectoContext from '../../context/proyectos/proyectoContext';
 import tareaContext from '../../context/tareas/tareaContext';
 
@@ -10,7 +10,18 @@ const FormTarea = () => {
 
     //Obtener el state de tareas
     const tareasContext = useContext(tareaContext);
-    const { errorTarea, ObtenerTareas, AgregarTarea, ValidarTarea } = tareasContext;
+    const { tareaActual, errorTarea, ObtenerTareas, AgregarTarea, ValidarTarea, ActualizarTarea } = tareasContext;
+
+    //Effect que detecta si hay una tarea seleccionada
+    useEffect(() => {
+        if(tareaActual !== null){
+            setTarea(tareaActual);
+        } else { 
+            setTarea({
+                nombre: ''
+            });
+        }
+    }, [tareaActual]);
 
     //State del formulario
     const [tarea, setTarea] = useState({
@@ -43,10 +54,17 @@ const FormTarea = () => {
             return;
         }
 
-        //Agregar nueva tarea al state de tareas
-        tarea.proyectoID = proyectoActual.id
-        tarea.estado = false;
-        AgregarTarea(tarea);
+        //Revisar si es edición o una nueva tarea
+        if(tareaActual ===  null){
+            //Tarea nueva
+            //Agregar nueva tarea al state de tareas
+            tarea.proyectoId = proyectoActual.id
+            tarea.estado = false;
+            AgregarTarea(tarea);
+        } else {
+            //Actualizar tarea existente
+            ActualizarTarea(tarea);
+        }
 
         //Obtener y filtrar las tareas del proyecto actual
         ObtenerTareas(proyectoActual.id);
@@ -78,7 +96,7 @@ const FormTarea = () => {
                     <input 
                         type="submit"
                         className="btn btn-primario btn-block"
-                        value="Agregar"
+                        value={tareaActual ? 'Editar tarea' : 'Agregar tarea'}
                     />
                 </div>
             </form>

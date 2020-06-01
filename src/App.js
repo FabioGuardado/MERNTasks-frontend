@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; //SIGUIENTE: VIDEO 8, CAPÍTULO 19
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'; //SIGUIENTE: CAPÍTULO 20
 
 import Login from './components/auth/Login';
 import NuevaCuenta from './components/auth/NuevaCuenta';
